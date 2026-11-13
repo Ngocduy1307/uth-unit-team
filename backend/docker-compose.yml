@@ -1,0 +1,37 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: affordability-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: affordability_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d affordability_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  zeebe:
+    image: camunda/zeebe:8.5.7
+    container_name: affordability-camunda-zeebe
+    restart: unless-stopped
+    environment:
+      - ZEEBE_BROKER_GATEWAY_SECURITY_PLAINTEXT=true
+      - ZEEBE_BROKER_NETWORK_HOST=0.0.0.0
+      - ZEEBE_BROKER_DATA_DISKUSAGECOMMANDWATERMARK=0.998
+      - ZEEBE_BROKER_DATA_DISKUSAGEREPLICATIONWATERMARK=0.999
+    ports:
+      - "26500:26500"
+      - "9600:9600" # Zeebe management port
+    volumes:
+      - zeebe_data:/usr/local/zeebe/data
+
+volumes:
+  postgres_data:
+  zeebe_data:
