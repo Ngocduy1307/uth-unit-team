@@ -1,0 +1,30 @@
+# Build outputs
+target/
+*.class
+*.jar
+*.war
+
+# Version Control & IDEs
+.git/
+.gitignore
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Logs
+*.log
+logs/
+
+# Secrets and local configurations
+application-local.yml
+application-local.yaml
+application-secret.yml
+application-secret.yaml
+.env
+.env.*
+
+# Project Documents & Guidelines (local only)
+*.pdf
+code_procedure.md

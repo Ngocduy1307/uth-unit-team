@@ -1,0 +1,26 @@
+# Operating System
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+
+# Secrets and local configurations
+*.local
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.yaml
+application-secret.yml
+application-secret.yaml
+
+# Project Internal Documents (local only)
+*.pdf
+code_procedure.md
+
