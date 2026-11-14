@@ -29,10 +29,16 @@ backend/src/main/java/vn/unit/affordability/
 ## 3. Hướng dẫn khởi chạy từ đầu (Step-by-Step)
 
 ### Bước 1: Khởi động cơ sở dữ liệu & Camunda 8 qua Docker Compose
-Thư mục `backend/` đã có sẵn file `docker-compose.yml` gồm **PostgreSQL 16** (port `5433` để tránh đụng độ port `5432` nếu máy đã cài Postgres) và **Camunda 8 Zeebe Broker** (port `26500`):
+Tại **thư mục gốc của dự án** (ngang hàng `backend/`, `frontend/`, `ai-service/`), file `docker-compose.yml` và file cấu hình mẫu `.env.example` đã được chuẩn hóa để toàn bộ nhóm dùng chung:
+* **PostgreSQL 16** (port mặc định `5433` để tránh đụng độ port `5432` nếu máy đã cài Postgres)
+* **Camunda 8 Zeebe Broker** (port mặc định `26500`)
 
 ```powershell
-# Chạy các service ngầm
+# Tại thư mục gốc của dự án:
+# (Tùy chọn) Copy file .env.example thành .env nếu muốn tùy biến port cá nhân
+Copy-Item .env.example .env
+
+# Khởi chạy các service ngầm
 docker compose up -d
 
 # Kiểm tra trạng thái container

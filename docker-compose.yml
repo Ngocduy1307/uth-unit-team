@@ -4,15 +4,15 @@ services:
     container_name: affordability-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: affordability_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ${POSTGRES_DB:-affordability_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     ports:
-      - "5433:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d affordability_db"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-affordability_db}"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -27,8 +27,8 @@ services:
       - ZEEBE_BROKER_DATA_DISKUSAGECOMMANDWATERMARK=0.998
       - ZEEBE_BROKER_DATA_DISKUSAGEREPLICATIONWATERMARK=0.999
     ports:
-      - "26500:26500"
-      - "9600:9600" # Zeebe management port
+      - "${ZEEBE_PORT:-26500}:26500"
+      - "${ZEEBE_MANAGEMENT_PORT:-9600}:9600" # Zeebe management port
     volumes:
       - zeebe_data:/usr/local/zeebe/data
 
