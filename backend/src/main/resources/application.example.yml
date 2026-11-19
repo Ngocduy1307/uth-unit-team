@@ -7,7 +7,6 @@ spring:
   profiles:
     active: local
 
-  # Cấu hình kết nối PostgreSQL
   datasource:
     url: jdbc:postgresql://localhost:5433/affordability_db
     username: postgres
@@ -18,7 +17,6 @@ spring:
       minimum-idle: 5
       pool-name: AffordabilityHikariPool
 
-  # Cấu hình Spring Data JPA / Hibernate
   jpa:
     hibernate:
       ddl-auto: validate
@@ -30,13 +28,11 @@ spring:
         jdbc:
           time_zone: Asia/Ho_Chi_Minh
 
-  # Cấu hình Flyway Migration
   flyway:
     enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
 
-# Cấu hình Camunda 8
 zeebe:
   client:
     broker:
@@ -54,10 +50,8 @@ camunda:
       security:
         plaintext: true
 
-# Cấu hình tích hợp hệ thống nội bộ
 app:
   ai-service:
     base-url: http://localhost:8000
     connect-timeout-ms: 5000
     read-timeout-ms: 30000
-

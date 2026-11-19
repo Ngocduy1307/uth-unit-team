@@ -24,9 +24,6 @@ public class AppProperties {
     @Getter
     @Setter
     public static class AiService {
-        /**
-         * Base URL of the Python AI Service (e.g. http://localhost:8000)
-         */
         private String baseUrl = "http://localhost:8000";
         private int connectTimeoutMs = 5000;
         private int readTimeoutMs = 30000;

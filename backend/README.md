@@ -63,7 +63,7 @@ Copy-Item src/main/resources/application.example.yml src/main/resources/applicat
 ./mvnw spring-boot:run
 ```
 Khi ứng dụng khởi động thành công:
-* **Flyway Migration:** Tự động kết nối PostgreSQL 16 và tạo các bảng `dossiers`, `evidence_records`, `outbox_events`.
+* **Flyway Migration:** Tự động kết nối PostgreSQL 16 và tạo đầy đủ 8 bảng nghiệp vụ (`dossiers`, `evidence_records`, `statement_accounts`, `transaction_ledger`, `obligations`, `affordability_snapshots`, `audit_logs`, `outbox_events`). Xem chi tiết thiết kế ERD tại [ERD_DATA_MODEL.md](docs/ERD_DATA_MODEL.md).
 * **Zeebe Client:** Tự động kết nối đến Camunda Zeebe Gateway tại `localhost:26500`.
 * **Tomcat Server:** Lắng nghe tại cổng `http://localhost:8080`.
 

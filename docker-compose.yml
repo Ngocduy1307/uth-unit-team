@@ -28,7 +28,7 @@ services:
       - ZEEBE_BROKER_DATA_DISKUSAGEREPLICATIONWATERMARK=0.999
     ports:
       - "${ZEEBE_PORT:-26500}:26500"
-      - "${ZEEBE_MANAGEMENT_PORT:-9600}:9600" # Zeebe management port
+      - "${ZEEBE_MANAGEMENT_PORT:-9600}:9600"
     volumes:
       - zeebe_data:/usr/local/zeebe/data
 

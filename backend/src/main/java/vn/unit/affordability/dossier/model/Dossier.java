@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 
@@ -53,6 +54,21 @@ public class Dossier {
     @Column(name = "analysis_date")
     private LocalDate analysisDate;
 
+    @Column(name = "loan_product", length = 64)
+    private String loanProduct;
+
+    @Column(name = "requested_amount", precision = 18, scale = 2)
+    private BigDecimal requestedAmount;
+
+    @Column(name = "requested_tenor_months")
+    private Integer requestedTenorMonths;
+
+    @Column(name = "proposed_interest_rate", precision = 5, scale = 2)
+    private BigDecimal proposedInterestRate;
+
+    @Column(name = "monthly_declared_living_expense", precision = 18, scale = 2)
+    private BigDecimal monthlyDeclaredLivingExpense;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
@@ -61,4 +77,3 @@ public class Dossier {
     @Column(name = "updated_at", nullable = false)
     private OffsetDateTime updatedAt;
 }
-

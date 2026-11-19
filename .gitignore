@@ -22,5 +22,6 @@ application-secret.yaml
 
 # Project Internal Documents (local only)
 *.pdf
+*.xlsx
 code_procedure.md
 
