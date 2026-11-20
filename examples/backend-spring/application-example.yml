@@ -1,0 +1,4 @@
+services:
+  data-ai:
+    base-url: http://data-ai:8001
+    internal-token: ${DATA_AI_INTERNAL_TOKEN}
