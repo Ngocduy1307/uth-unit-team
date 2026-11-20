@@ -1,0 +1,63 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: unit-data-ai-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-income_assistant}
+      POSTGRES_USER: ${POSTGRES_USER:-data_ai}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-this-local-password}
+      TZ: Asia/Ho_Chi_Minh
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-data_ai} -d ${POSTGRES_DB:-income_assistant}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  flyway:
+    image: flyway/flyway:10
+    command: -url=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-income_assistant} -user=${POSTGRES_USER:-data_ai} -password=${POSTGRES_PASSWORD:-change-this-local-password} -schemas=data_ai -defaultSchema=data_ai -createSchemas=true -locations=filesystem:/flyway/sql migrate
+    volumes:
+      - ./db/migration:/flyway/sql:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    build: .
+    container_name: unit-data-ai-api
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-data_ai}:${POSTGRES_PASSWORD:-change-this-local-password}@postgres:5432/${POSTGRES_DB:-income_assistant}?options=-csearch_path%3Ddata_ai
+      INTERNAL_SERVICE_TOKEN: ${INTERNAL_SERVICE_TOKEN:-local-dev-only-change-me}
+      STORAGE_DIR: /app/storage
+      EXPORT_DIR: /app/exports
+    ports:
+      - "${API_PORT:-8001}:8001"
+    volumes:
+      - data_ai_storage:/app/storage
+      - data_ai_exports:/app/exports
+    depends_on:
+      flyway:
+        condition: service_completed_successfully
+
+  pgadmin:
+    image: dpage/pgadmin4:8
+    profiles: ["tools"]
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@example.local}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-change-this-pgadmin-password}
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  data_ai_storage:
+  data_ai_exports:
