@@ -30,6 +30,24 @@
           <input id="password" name="password" type="password"
                  autocomplete="current-password" placeholder="Enter password" required>
         </div>
+        
+        <fieldset class="role-picker">
+          <legend>Select your role</legend>
+          <div class="role-options">
+            <label>
+              <input type="radio" name="role" value="maker" checked>
+              <span>Maker</span>
+            </label>
+            <label>
+              <input type="radio" name="role" value="checker">
+              <span>Checker</span>
+            </label>
+            <label>
+              <input type="radio" name="role" value="admin">
+              <span>Admin</span>
+            </label>
+          </div>
+        </fieldset>
 
         <p id="login-error" class="error" role="alert"></p>
         <button id="sign-in" type="submit" disabled>Sign in</button>

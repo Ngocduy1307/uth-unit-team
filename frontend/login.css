@@ -118,3 +118,68 @@ button:disabled {
     background-position: left center;
   }
 }
+.role-picker {
+  margin: 16px 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.role-picker legend {
+  margin-bottom: 7px;
+  font-weight: 700;
+}
+
+.role-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(6px, 2vw, 22px);
+}
+
+.role-options label {
+  display: grid;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+}
+
+.role-options input {
+  position: absolute;
+  width: 1px;
+  min-height: 0;
+  height: 1px;
+  opacity: 0;
+}
+
+.role-options span {
+  display: grid;
+  place-items: center;
+  min-height: 42px;
+  border: 1px solid #798194;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.role-options input:checked + span {
+  background: #dce2ff;
+  border-color: #696de5;
+  color: #202b65;
+}
+
+.role-options input:focus-visible + span {
+  outline: 2px solid #4e6fe2;
+  outline-offset: 3px;
+}
+
+#demo-note {
+  margin: 10px 0 0;
+  font-size: .8125rem;
+}
+
+.dashboard-card h1 {
+  font-size: 1.4rem;
+}
+
+.dashboard-card a {
+  color: #354ac2;
+}
