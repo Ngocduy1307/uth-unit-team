@@ -1,0 +1,120 @@
+:root {
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #344158;
+  background: #e8edfc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.login-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 32px 5%;
+  background:
+    url("./assets/finance-background.webp") center / cover no-repeat,
+    radial-gradient(ellipse at 95% 100%, #a698f3, transparent 42%),
+    radial-gradient(ellipse at 90% 10%, #b4d1ff, transparent 48%),
+    linear-gradient(140deg, #e5e9fd, #f4f6ff 60%, #8dc2fb);
+}
+
+.login-card {
+  width: min(100%, 500px);
+  padding: clamp(24px, 5vw, 48px);
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 8px 26px #45537d22;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.brand-icon {
+  display: block;
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.brand h1 {
+  margin: 0 0 4px;
+  color: #101116;
+  font-size: 24px;
+}
+
+.brand p {
+  margin: 0;
+  color: #677388;
+  font-size: 14px;
+}
+
+.field + .field {
+  margin-top: 16px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input,
+button {
+  width: 100%;
+  min-height: 44px;
+  font: inherit;
+}
+
+input {
+  padding: 10px 12px;
+  border: 1px solid #cdd5e2;
+  border-radius: 6px;
+  color: #26334b;
+}
+
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid #4e6fe2;
+  outline-offset: 3px;
+}
+
+.error {
+  min-height: 20px;
+  margin: 18px 0 8px;
+  color: #a11b35;
+  font-size: 14px;
+}
+
+button {
+  border: 0;
+  border-radius: 14px;
+  background: linear-gradient(100deg, #547bd5, #9549ce);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+@media (max-width: 650px) {
+  .login-page {
+    justify-content: center;
+    padding: 24px 16px;
+    background-position: left center;
+  }
+}

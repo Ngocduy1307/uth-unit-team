@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sign in | FinSight AI</title>
+  <link rel="stylesheet" href="./login.css">
+  <script type="module" src="./login.js"></script>
+</head>
+<body>
+  <main class="login-page">
+    <section class="login-card" aria-labelledby="brand-title">
+      <header class="brand">
+        <img class="brand-icon" src="./assets/logo.svg" alt="" width="60" height="60">
+        <div>
+          <h1 id="brand-title">FinSight AI</h1>
+          <p>Income &amp; Affordability Analysis Assistant</p>
+        </div>
+      </header>
+
+      <form id="login-form" method="post">
+        <div class="field">
+          <label for="employee-id">Employee ID</label>
+          <input id="employee-id" name="employeeId" autocomplete="username"
+                 placeholder="Enter employee ID" required>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password"
+                 autocomplete="current-password" placeholder="Enter password" required>
+        </div>
+
+        <p id="login-error" class="error" role="alert"></p>
+        <button id="sign-in" type="submit" disabled>Sign in</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>
