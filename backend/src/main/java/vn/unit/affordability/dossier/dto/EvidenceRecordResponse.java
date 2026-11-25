@@ -29,5 +29,9 @@ public class EvidenceRecordResponse {
     private String mimeType;
     private String ocrStatus;
     private OffsetDateTime ocrProcessedAt;
+    private Integer version;
+    private Boolean isLatest;
+    private String updatedBy;
     private OffsetDateTime createdAt;
+    private OffsetDateTime updatedAt;
 }
