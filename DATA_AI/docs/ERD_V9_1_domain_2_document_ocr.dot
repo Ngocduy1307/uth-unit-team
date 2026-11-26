@@ -1,0 +1,23 @@
+digraph ERD {
+graph [rankdir=LR, splines=ortho, nodesep=0.55, ranksep=1.1, fontname="Arial", label="DATA_AI V9.1 | Domain 2: domain 2 document ocr", labelloc=t, fontsize=18];
+node [shape=plain, fontname="Arial"];
+edge [color="#64748b", arrowsize=0.65, fontname="Arial", fontsize=8];
+"cases" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>cases</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">KEY</TD><TD ALIGN="LEFT">bank_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">bank_organization_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">customer_id</TD></TR></TABLE>>];
+"documents" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>documents</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR></TABLE>>];
+"document_security_events" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>document_security_events</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR></TABLE>>];
+"extracted_fields" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>extracted_fields</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR></TABLE>>];
+"processing_results" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>processing_results</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR></TABLE>>];
+"pipeline_runs" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>pipeline_runs</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR></TABLE>>];
+"consent_events" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>consent_events</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">customer_id</TD></TR></TABLE>>];
+"audit_events" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>audit_events</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR></TABLE>>];
+"cases" -> "documents" [label="case_id"];
+"documents" -> "document_security_events" [label="document_id"];
+"documents" -> "extracted_fields" [label="document_id"];
+"documents" -> "processing_results" [label="document_id"];
+"cases" -> "processing_results" [label="case_id"];
+"documents" -> "pipeline_runs" [label="document_id"];
+"cases" -> "pipeline_runs" [label="case_id"];
+"cases" -> "consent_events" [label="customer_id"];
+"cases" -> "consent_events" [label="case_id"];
+"cases" -> "audit_events" [label="case_id"];
+}

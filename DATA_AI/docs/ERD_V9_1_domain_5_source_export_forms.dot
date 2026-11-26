@@ -1,0 +1,14 @@
+digraph ERD {
+graph [rankdir=LR, splines=ortho, nodesep=0.55, ranksep=1.1, fontname="Arial", label="DATA_AI V9.1 | Domain 5: domain 5 source export forms", labelloc=t, fontsize=18];
+node [shape=plain, fontname="Arial"];
+edge [color="#64748b", arrowsize=0.65, fontname="Arial", fontsize=8];
+"source_inventory" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>source_inventory</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR></TABLE>>];
+"field_mapping_registry" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>field_mapping_registry</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR></TABLE>>];
+"export_jobs" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>export_jobs</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">KEY</TD><TD ALIGN="LEFT">bank_id</TD></TR></TABLE>>];
+"form_definitions" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>form_definitions</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">created_by</TD></TR></TABLE>>];
+"form_field_definitions" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>form_field_definitions</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">form_definition_id</TD></TR></TABLE>>];
+"staff_users" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>staff_users</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">bank_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">branch_id</TD></TR></TABLE>>];
+"cases" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>cases</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">KEY</TD><TD ALIGN="LEFT">bank_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">bank_organization_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">customer_id</TD></TR></TABLE>>];
+"staff_users" -> "form_definitions" [label="created_by"];
+"form_definitions" -> "form_field_definitions" [label="form_definition_id"];
+}

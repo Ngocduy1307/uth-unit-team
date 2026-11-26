@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://internal.example/schemas/data-ai-readiness-v1.schema.json",
+  "title": "DATA-AI Readiness V1",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "case_id",
+    "status",
+    "workflow_route_hint",
+    "workflow_route_authority",
+    "ready_for_business_engine",
+    "scope_status",
+    "consent_status",
+    "window_months",
+    "covered_statement_months",
+    "missing_statement_months",
+    "missing_observed_income_ledger_months",
+    "income_ledger_maker_review_pending_months",
+    "blockers",
+    "warnings",
+    "technical_readiness",
+    "declaration_revision_ids"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "DATA_AI_READINESS_V1"
+    },
+    "case_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "status": {
+      "enum": [
+        "READY_FOR_BUSINESS_ENGINE",
+        "NEEDS_MAKER_REVIEW",
+        "INSUFFICIENT_EVIDENCE",
+        "BLOCKED"
+      ]
+    },
+    "workflow_route_hint": {
+      "enum": [
+        "BUSINESS_ENGINE_HANDOFF",
+        "MAKER_REVIEW",
+        "AWAITING_EVIDENCE",
+        "INSUFFICIENT_EVIDENCE",
+        "HOLD"
+      ]
+    },
+    "workflow_route_authority": {
+      "const": "CAMUNDA_BANK_DMN_NOT_DATA_AI"
+    },
+    "ready_for_business_engine": {
+      "type": "boolean"
+    },
+    "scope_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "consent_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "window_months": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9]{4}-[0-9]{2}$"
+      },
+      "minItems": 0,
+      "maxItems": 6
+    },
+    "covered_statement_months": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_statement_months": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "missing_observed_income_ledger_months": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "income_ledger_maker_review_pending_months": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "technical_readiness": {
+      "type": "object"
+    },
+    "declaration_revision_ids": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "format": "uuid"
+      }
+    }
+  },
+  "additionalProperties": true
+}

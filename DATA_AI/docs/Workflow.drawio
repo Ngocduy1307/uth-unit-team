@@ -1,0 +1,419 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Trang-1" id="53ARnYqkFnsg5FB8F1Ps">
+    <mxGraphModel dx="2975" dy="1718" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="legend-box" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;startSize=24;" value="CHÚ THÍCH VAI TRÒ &amp; LOẠI TÁC VỤ (CAMUNDA 8)" vertex="1">
+          <mxGeometry height="72" width="800" x="-180" y="-110" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-sys" parent="legend-box" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=11;" value="Hệ thống [Service / DMN]" vertex="1">
+          <mxGeometry height="28" width="140" x="10" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-maker" parent="legend-box" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" value="Maker [User Task]" vertex="1">
+          <mxGeometry height="28" width="115" x="160" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-checker" parent="legend-box" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" value="Checker [User Task]" vertex="1">
+          <mxGeometry height="28" width="120" x="285" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-auth" parent="legend-box" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;" value="Cấp thẩm quyền [Escalation]" vertex="1">
+          <mxGeometry height="28" width="145" x="415" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-gw" parent="legend-box" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;" value="Cổng rẽ nhánh" vertex="1">
+          <mxGeometry height="36" width="100" x="570" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="leg-err" parent="legend-box" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;dashed=1;fontSize=11;" value="Lỗi / Degradation" vertex="1">
+          <mxGeometry height="28" width="110" x="680" y="34" as="geometry" />
+        </mxCell>
+        <mxCell id="1f0bi5SYKTcXxS2jtoLU-2" edge="1" parent="1" source="start" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="1f0bi5SYKTcXxS2jtoLU-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="start" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;" value="Bắt đầu" vertex="1">
+          <mxGeometry height="60" width="100" x="-292" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n-intake" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Tiếp nhận hồ sơ &amp; chứng từ&#xa;(Tạo Manifest &amp; Hash - INC 01)" vertex="1">
+          <mxGeometry height="60" width="210" x="60" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="n-scope" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[DMN] Kiểm tra phạm vi hỗ trợ &amp;&#xa;Quyền xử lý dữ liệu (Consent - SEC 02)" vertex="1">
+          <mxGeometry height="60" width="210" x="60" y="135" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-scope" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Hợp lệ phạm vi &amp;&#xa;đủ Consent?" vertex="1">
+          <mxGeometry height="80" width="150" x="90" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="n-outscope" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Chuyển quy trình chuyên trách&#xa;ngân hàng (Out of Scope)" vertex="1">
+          <mxGeometry height="55" width="190" x="340" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="end-outscope" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Kết thúc&#xa;(Out of Scope)" vertex="1">
+          <mxGeometry height="60" width="110" x="580" y="187.5" as="geometry" />
+        </mxCell>
+        <mxCell id="n-no-consent" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Chặn / Tạm giữ xử lý&#xa;(Thiếu Consent / Quyền dữ liệu - SEC 02)" vertex="1">
+          <mxGeometry height="55" width="190" x="340" y="275" as="geometry" />
+        </mxCell>
+        <mxCell id="end-no-consent" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Kết thúc&#xa;(Chặn xử lý)" vertex="1">
+          <mxGeometry height="60" width="110" x="580" y="272.5" as="geometry" />
+        </mxCell>
+        <mxCell id="n-safe" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Kiểm tra an toàn, toàn vẹn&#xa;(Hash), định dạng &amp; giới hạn file (INC 02)" vertex="1">
+          <mxGeometry height="60" width="210" x="60" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-file" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Trạng thái file?" vertex="1">
+          <mxGeometry height="80" width="140" x="95" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="n-quarantine" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Cách ly / Từ chối file&#xa;&amp; Ghi nhận lỗi (Zero silent loss)" vertex="1">
+          <mxGeometry height="60" width="180" x="340" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="n-maker-verify" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="[User] Maker xác minh sở hữu TK, kỳ sao kê,&#xa;khớp tổng PDF–CSV &amp; việc làm hiện tại (INC 03)" vertex="1">
+          <mxGeometry height="65" width="240" x="45" y="575" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-verify" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Xác minh hợp lệ?" vertex="1">
+          <mxGeometry height="80" width="140" x="95" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="n-extract" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Phân loại &amp; trích xuất dữ liệu&#xa;(M AI 01-02; Abstain khi mờ/không rõ)" vertex="1">
+          <mxGeometry height="60" width="220" x="55" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="n-manual-extract" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;dashed=1;" value="[Degradation - ARC 07] Lỗi trích xuất:&#xa;Giữ Intake an toàn &amp; chuyển Maker&#xa;review/nhập thủ công" vertex="1">
+          <mxGeometry height="70" width="200" x="-278" y="767" as="geometry" />
+        </mxCell>
+        <mxCell id="n-inc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Tổng hợp thu nhập (I)&#xa;(Sao kê &amp; Bảng lương)" vertex="1">
+          <mxGeometry height="65" width="155" x="-110" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="n-exp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Tổng hợp chi phí (E)&#xa;(So kê khai với sàn tối thiểu;&#xa;thiếu không tự rơi về sàn - AFF 02)" vertex="1">
+          <mxGeometry height="65" width="195" x="67.5" y="912" as="geometry" />
+        </mxCell>
+        <mxCell id="n-debt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Tổng hợp nghĩa vụ nợ (D)&#xa;(Kê khai, CIC &amp; Khấu trừ lương)" vertex="1">
+          <mxGeometry height="65" width="170" x="280" y="910" as="geometry" />
+        </mxCell>
+        <mxCell id="n-maker-reconcile" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;" value="[User] Maker đối chiếu chéo, khử trùng lặp &amp; xác nhận&#xa;dữ liệu đầu vào (I - E - D) (AFF 01, AFF 04)" vertex="1">
+          <mxGeometry height="60" width="300" x="15" y="1020" as="geometry" />
+        </mxCell>
+        <mxCell id="n-schedule" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Tiếp nhận lịch trả nợ đề xuất (P)&#xa;(Validate tổng &amp; Product Version - AFF 05)" vertex="1">
+          <mxGeometry height="60" width="220" x="55" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-complete" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="[DMN] Dữ liệu đầy đủ&#xa;&amp; đã xác nhận?" vertex="1">
+          <mxGeometry height="80" width="160" x="560" y="1110" as="geometry" />
+        </mxCell>
+        <mxCell id="n-short-hist" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="[User] Chuyển review riêng / Gắn nhãn&#xa;Insufficient Evidence (Lịch sử &lt; 6 tháng)" vertex="1">
+          <mxGeometry height="60" width="220" x="530" y="1245" as="geometry" />
+        </mxCell>
+        <mxCell id="end-short-hist" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Kết thúc&#xa;(Insufficient Evidence)" vertex="1">
+          <mxGeometry height="60" width="130" x="795" y="1245" as="geometry" />
+        </mxCell>
+        <mxCell id="n-provisional" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;dashed=1;" value="[Service] Hiển thị Kịch bản tạm thời&#xa;(Provisional Scenario - Chưa hoàn tất)" vertex="1">
+          <mxGeometry height="60" width="200" x="540" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="n-awaiting" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[DMN Routing] Yêu cầu bổ sung chứng từ&#xa;(Trạng thái: Awaiting Evidence)" vertex="1">
+          <mxGeometry height="60" width="200" x="540" y="690" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-timer" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Quá hạn bổ sung?&#xa;(Camunda Timer / DMN)" vertex="1">
+          <mxGeometry height="80" width="160" x="560" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="n-exp-wait" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Đánh dấu Hết hạn&#xa;(Expired)" vertex="1">
+          <mxGeometry height="60" width="130" x="810" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="end-exp-wait" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Kết thúc&#xa;(Expired)" vertex="1">
+          <mxGeometry height="60" width="110" x="820" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="n-resubmit" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Message] Tiếp nhận chứng từ bổ sung&#xa;(Tạo Version mới &amp; Impact List)" vertex="1">
+          <mxGeometry height="60" width="200" x="540" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="n-calc" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Tính residual (R) &amp; tỷ lệ nợ (Q)&#xa;từng tháng (I &lt;= 0 -&gt; Q = undefined - AFF 06)" vertex="1">
+          <mxGeometry height="60" width="240" x="1030" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="n-calc-hold" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;dashed=1;" value="[Degradation - ARC 07 / CAM 03]&#xa;Lỗi tính toán: Tạm giữ (Hold),&#xa;Bounded Retry &amp; Báo Incident" vertex="1">
+          <mxGeometry height="65" width="220" x="1040" y="1235" as="geometry" />
+        </mxCell>
+        <mxCell id="n-stress" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Phân tích Baseline &amp;&#xa;2 kịch bản Stress Scenarios (AFF 08)" vertex="1">
+          <mxGeometry height="60" width="220" x="1040" y="1017" as="geometry" />
+        </mxCell>
+        <mxCell id="n-policy" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[DMN] Đối chiếu ngưỡng &amp; Gán nhãn chính sách&#xa;(AFF 07: Met / Exception / Review nếu Q undefined)" vertex="1">
+          <mxGeometry height="65" width="250" x="1025" y="912" as="geometry" />
+        </mxCell>
+        <mxCell id="n-explain" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="[Service] Tạo diễn giải theo template&#xa;(M AI 03: Income bridge, khoản loại trừ,&#xa;khoảng trống nợ &amp; narrative)" vertex="1">
+          <mxGeometry height="65" width="230" x="1035" y="807" as="geometry" />
+        </mxCell>
+        <mxCell id="n-maker-review" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="[User] Maker rà soát kết quả phân tích,&#xa;ngưỡng &amp; đề xuất Override (nếu có)" vertex="1">
+          <mxGeometry height="60" width="220" x="1040" y="707" as="geometry" />
+        </mxCell>
+        <mxCell id="n-freeze" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontStyle=1;" value="[App Service] Freeze version &amp;&#xa;Kiểm tra Maker ≠ Checker (CAM 05)" vertex="1">
+          <mxGeometry height="60" width="220" x="1040" y="607" as="geometry" />
+        </mxCell>
+        <mxCell id="n-checker" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="[User] Checker kiểm tra độc lập&#xa;(Đầu vào, loại trừ, ngưỡng, stress)" vertex="1">
+          <mxGeometry height="60" width="220" x="1040" y="507" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-checker" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Checker xác nhận?" vertex="1">
+          <mxGeometry height="80" width="140" x="1325" y="497" as="geometry" />
+        </mxCell>
+        <mxCell id="n-reject-back" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="[User] Trả lại Maker&#xa;(Tạo Version mới / Superseded bản cũ)" vertex="1">
+          <mxGeometry height="60" width="190" x="1300" y="632" as="geometry" />
+        </mxCell>
+        <mxCell id="n-maker-edit" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="[User] Maker chỉnh sửa dữ liệu đầu vào&#xa;(Lưu vết sửa &amp; lý do)" vertex="1">
+          <mxGeometry height="60" width="190" x="1300" y="877" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-override" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Có Override /&#xa;Policy Exception?" vertex="1">
+          <mxGeometry height="80" width="150" x="1535" y="497" as="geometry" />
+        </mxCell>
+        <mxCell id="n-escalation" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="[User - Escalation / CAT 01]&#xa;Cấp thẩm quyền ngân hàng (Named Authority)&#xa;phê duyệt Override &amp; ghi lý do (Annex B)" vertex="1">
+          <mxGeometry height="70" width="240" x="1490" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-esc-ok" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Chấp thuận&#xa;Override?" vertex="1">
+          <mxGeometry height="80" width="130" x="1830" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="n-export" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontStyle=1;" value="[Service] Hoàn tất &amp; Xuất gói phân tích&#xa;(JSON/CSV &amp; PDF - Gắn Hash với Applicant,&#xa;Product, Policy &amp; Calc Version - ARC 06)" vertex="1">
+          <mxGeometry height="70" width="250" x="1770" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-mode" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Chế độ vận hành?&#xa;(Release Gates G3/G4)" vertex="1">
+          <mxGeometry height="80" width="150" x="2060" y="497" as="geometry" />
+        </mxCell>
+        <mxCell id="n-shadow" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Lưu đối chiếu song song&#xa;(Không dùng quyết định tín dụng - G3)" vertex="1">
+          <mxGeometry height="60" width="210" x="2030" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="end-shadow" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Kết thúc&#xa;(Shadow)" vertex="1">
+          <mxGeometry height="60" width="110" x="2080" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="n-oper" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Bàn giao quy trình quyết định&#xa;tín dụng ngân hàng (Sau G4)" vertex="1">
+          <mxGeometry height="60" width="200" x="2290" y="507" as="geometry" />
+        </mxCell>
+        <mxCell id="end-oper" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Kết thúc&#xa;(Operational)" vertex="1">
+          <mxGeometry height="60" width="110" x="2335" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="gw-post" parent="1" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="Event Sub-process&#xa;sau hoàn tất?" vertex="1">
+          <mxGeometry height="85" width="160" x="1815" y="655" as="geometry" />
+        </mxCell>
+        <mxCell id="n-post-exp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Đánh dấu Hết hạn&#xa;(Expired - Historical Snapshot)" vertex="1">
+          <mxGeometry height="60" width="200" x="2088" y="667.5" as="geometry" />
+        </mxCell>
+        <mxCell id="end-post-exp" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" value="Kết thúc&#xa;(Expired)" vertex="1">
+          <mxGeometry height="60" width="110" x="2133" y="785" as="geometry" />
+        </mxCell>
+        <mxCell id="n-reopen-pol" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Vô hiệu hóa bản cũ (Snapshot)&#xa;&amp; Mở lại (Reopened - Đổi chính sách / P)" vertex="1">
+          <mxGeometry height="60" width="230" x="1530" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="n-reopen-ev" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;" value="Vô hiệu hóa bản cũ (Snapshot)&#xa;&amp; Mở lại (Reopened - Đổi chứng từ)" vertex="1">
+          <mxGeometry height="60" width="220" x="1785" y="807" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="n-intake" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-scope">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="n-scope" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-scope">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4a" edge="1" parent="1" source="gw-scope" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-outscope" value="Out of Scope">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5a" edge="1" parent="1" source="n-outscope" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end-outscope">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4b" edge="1" parent="1" source="gw-scope" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-no-consent" value="Thiếu Consent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5b" edge="1" parent="1" source="n-no-consent" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end-no-consent">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="gw-scope" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-safe" value="Có">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="n-safe" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-file">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="gw-file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-quarantine" value="Quarantined / Rejected">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="n-quarantine" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;" target="n-awaiting">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e10" edge="1" parent="1" source="gw-file" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-maker-verify" value="Accepted">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e11" edge="1" parent="1" source="n-maker-verify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-verify">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e12" edge="1" parent="1" source="gw-verify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-awaiting" value="Không">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13" edge="1" parent="1" source="gw-verify" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-extract" value="Có">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13-err" edge="1" parent="1" source="n-extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#d79b00;" target="n-manual-extract" value="Outage">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e13-rec" edge="1" parent="1" source="n-manual-extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#d79b00;exitX=0.5;exitY=1;entryX=0;entryY=0.5;" target="n-maker-reconcile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e14" edge="1" parent="1" source="n-extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-inc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e15" edge="1" parent="1" source="n-extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-exp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e16" edge="1" parent="1" source="n-extract" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-debt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e17" edge="1" parent="1" source="n-inc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-maker-reconcile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e18" edge="1" parent="1" source="n-exp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-maker-reconcile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e19" edge="1" parent="1" source="n-debt" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-maker-reconcile">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e20" edge="1" parent="1" source="n-maker-reconcile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-schedule">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e21" edge="1" parent="1" source="n-schedule" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-complete">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22a" edge="1" parent="1" source="gw-complete" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-provisional" value="Thiếu (Có thể bổ sung)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22b" edge="1" parent="1" source="gw-complete" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-short-hist" value="Lịch sử &lt; 6 tháng">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e22c" edge="1" parent="1" source="n-short-hist" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end-short-hist">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e23" edge="1" parent="1" source="n-provisional" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-awaiting">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e24" edge="1" parent="1" source="n-awaiting" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-timer">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e25" edge="1" parent="1" source="gw-timer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-exp-wait" value="Có (Hết hạn)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e26" edge="1" parent="1" source="n-exp-wait" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end-exp-wait">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e27" edge="1" parent="1" source="gw-timer" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-resubmit" value="Không (Đã bổ sung)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e28" edge="1" parent="1" source="n-resubmit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-safe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e29" edge="1" parent="1" source="gw-complete" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-calc" value="Có">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e29-err" edge="1" parent="1" source="n-calc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#d79b00;exitX=0.25;exitY=1;entryX=0.25;entryY=0;" target="n-calc-hold" value="Lỗi">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e29-rec" edge="1" parent="1" source="n-calc-hold" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;strokeColor=#d79b00;exitX=0.75;exitY=0;entryX=0.75;entryY=1;" target="n-calc" value="Đã xử lý Incident">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e30" edge="1" parent="1" source="n-calc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-stress">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e31" edge="1" parent="1" source="n-stress" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-policy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e31b" edge="1" parent="1" source="n-policy" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-explain">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e32" edge="1" parent="1" source="n-explain" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-maker-review">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e32b" edge="1" parent="1" source="n-maker-review" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-freeze">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e33" edge="1" parent="1" source="n-freeze" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-checker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e34" edge="1" parent="1" source="n-checker" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-checker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e35" edge="1" parent="1" source="gw-checker" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-reject-back" value="Không">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e37" edge="1" parent="1" source="n-reject-back" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="n-maker-edit" value="Sai số liệu / Tính lại">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1395" y="822" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e38" edge="1" parent="1" source="n-maker-edit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;" target="gw-complete" value="Kiểm tra lại đầu vào (ARC 05)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1395" y="1350" />
+              <mxPoint x="960" y="1350" />
+              <mxPoint x="960" y="1170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e40" edge="1" parent="1" source="gw-checker" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-override" value="Có">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e40a" edge="1" parent="1" source="gw-override" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-export" value="Không">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e40b" edge="1" parent="1" source="gw-override" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-escalation" value="Có (Escalation)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e40c" edge="1" parent="1" source="n-escalation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-esc-ok">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e40d" edge="1" parent="1" source="gw-esc-ok" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-export" value="Có">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e40e" edge="1" parent="1" source="gw-esc-ok" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=0;entryX=0.929;entryY=0.019;entryDx=0;entryDy=0;entryPerimeter=0;exitDx=0;exitDy=0;" target="n-reject-back" value="Không">
+          <mxGeometry relative="1" x="0.1486" as="geometry">
+            <Array as="points">
+              <mxPoint x="1895" y="285" />
+              <mxPoint x="1476.5" y="285" />
+            </Array>
+            <mxPoint x="1856.48" y="330" as="sourcePoint" />
+            <mxPoint x="1450.89" y="593.58" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e41" edge="1" parent="1" source="n-export" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="gw-mode">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e42" edge="1" parent="1" source="gw-mode" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-shadow" value="Shadow Pilot (Mặc định)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e43" edge="1" parent="1" source="n-shadow" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end-shadow">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e44" edge="1" parent="1" source="gw-mode" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-oper" value="Operational (Sau G4)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e45" edge="1" parent="1" source="n-oper" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end-oper">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e46" edge="1" parent="1" source="n-export" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;dashed=1;" target="gw-post" value="Event Sub-process">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e47" edge="1" parent="1" source="gw-post" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-post-exp" value="Hết hạn độ mới">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e48" edge="1" parent="1" source="n-post-exp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="end-post-exp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e49a" edge="1" parent="1" source="gw-post" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-reopen-pol" value="Đổi chính sách / P">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e49b" edge="1" parent="1" source="gw-post" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;" target="n-reopen-ev" value="Đổi chứng từ">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e50a" edge="1" parent="1" source="n-reopen-pol" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" target="n-calc" value="Tính lại (Impact List)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1645" y="1150" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e50b" edge="1" parent="1" source="n-reopen-ev" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;" target="n-resubmit" value="Rework (Nộp lại file)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1895" y="1390" />
+              <mxPoint x="980" y="1390" />
+              <mxPoint x="980" y="395" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="1f0bi5SYKTcXxS2jtoLU-3" edge="1" parent="1" source="1f0bi5SYKTcXxS2jtoLU-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;defaultLabelBackgroundColor=page;labelPadding=0 4;" target="n-intake">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="1f0bi5SYKTcXxS2jtoLU-1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="[User] Maker tạo hồ sơ" vertex="1">
+          <mxGeometry height="60" width="154" x="-142" y="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

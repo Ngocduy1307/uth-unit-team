@@ -1,0 +1,41 @@
+# Workflow(4) ↔ DATA-AI Traceability — V10.0
+
+**Source:** `docs/Workflow(4).drawio`, copied byte-for-byte from the user-supplied workflow. **Technical boundary source:** `Bao_cao_He_thong_UNIT_Camunda8_va_Cong_nghe_OCR.docx`.
+
+| Workflow stage | DATA-AI implementation / API | DATA-AI responsibility | External owner / limitation |
+|---|---|---|---|
+| Intake / applicant profile | `POST /api/v1/cases`; existing applicant-submission and document APIs | Stores case-scoped evidence and references; preserves file bytes and hash | Backend owns applicant identity, user-facing intake and authoritative master data |
+| Consent & scope | `POST /api/v1/cases/{case_id}/scope-consent-attestations` | Append-only mirror of signed Backend decision reference, scope, purpose, notice version and attestation hash | Backend/SSO and Bank DMN produce the decision; DATA-AI does not create/legalize consent |
+| File safety / manifest | Existing upload, ClamAV scan, manifest and V17 security guards | Validates content signature/size, exact-byte ClamAV attestation, SHA-256 and manifest provenance | Private ClamAV, quarantine storage, KMS and platform retention need deployment verification |
+| Native PDF / scanned PDF / CSV | Existing PyMuPDF native text and scanned-document OCR/Tesseract path; CSV processor | Keeps OCR output provisional with field/page/line/bounding-box anchors, confidence basis and abstain; preserves leading-zero identifiers as strings | Existing generic profile catalog is provisional; six bank templates, model tuning and OCR metrics require bank sign-off and independent data |
+| Six document families / 20 critical fields | Existing `/api/v1/admin/ocr/catalog` and extraction pipeline | Versioned candidate layout/field catalog and evidence anchors | Exact bank template names/mandatory fields/thresholds must be confirmed by PO and labeled samples |
+| Payslip ↔ bank-credit match | Existing payroll evidence and earning-match candidate services; `POST /api/v1/cases/{case_id}/input-reviews` | Generates candidates; Maker confirmation requires both source documents and stores evidence refs; no auto-accept | Maker owns source interpretation; DATA-AI does not certify employer or account ownership |
+| Income / expense / debt declarations | `POST /api/v1/cases/{case_id}/declarations/{section_code}/revisions`; `GET .../declarations`; Maker input review | Immutable revisions for HOUSEHOLD, EMPLOYMENT, EXPENSES, LIABILITIES and SALARY_ACCOUNTS; explicit NONE/HAS_ITEMS; missing amounts remain null | Backend is the applicant declaration source; Maker checks evidence; Bank policy defines any eligible treatment |
+| Six-month statement coverage / PDF–CSV totals | `GET /api/v1/cases/{case_id}/data-readiness`; existing reconciliation run/review endpoints | Checks six-month coverage, current source hashes/trust, counterpart reconciliation and Maker decision | Maker resolves unmatched/variance; Camunda routes missing evidence and timers |
+| Monthly observed income ledger | Existing `rebuild_observed_income_ledger`; `POST .../input-reviews` with `INCOME_LEDGER` | Requires observed row and Maker-confirmed review for each of six months; `accepted_amount_vnd` stays NULL | DATA-AI does not determine eligible income, average missing months or infer zero |
+| Transaction duplicate candidates | Existing V13 duplicate candidate/review APIs | Preserves both source rows and Maker decision; does not delete or net duplicates | Downstream Financial Engine consumes the reviewed status according to bank rule |
+| Readiness / recoverability | `GET /api/v1/cases/{case_id}/data-readiness` | Returns blockers, warnings, six-month coverage, and advisory `workflow_route_hint` | Camunda/Bank DMN is routing authority: MAKER_REVIEW, AWAITING_EVIDENCE, INSUFFICIENT_EVIDENCE, HOLD or handoff decision |
+| Awaiting Evidence / Timer / Expired / Resubmit | Existing V16 evidence-request, resubmit, inbox/outbox, reopen and Impact List APIs | Stores request, evidence arrival, successor version reference, source hashes and impact summary | Camunda owns Timer/BPMN/User Task; Bank policy determines final expiry and insufficient-history threshold |
+| Proposed Schedule P | `POST /api/v1/cases/{case_id}/proposed-schedule-references` | Stores external schedule ref, VND, 6–36 month term, product version and hash bound to input bundle | Financial/Business Engine owns schedule calculation and product terms |
+| R/Q + baseline + 2 stress scenarios / policy DMN | `POST /api/v1/cases/{case_id}/business-engine-receipts` | Records bundle input hash, product/policy/calculation refs+hashes, output hash and exactly three scenario refs | External Financial Engine owns exact-decimal calculation, residual, DSR/Q, stress and policy outcome |
+| Maker input review / Freeze / Checker | Existing V14 governance and Maker/Checker routes; V10 handoff records included in snapshot | Freeze captures immutable, hash-verified evidence and declarations; Checker is a separate actor | Backend/SSO assigns users and Camunda owns task lifecycle; Checker is not loan approval |
+| Override / Named Authority | Existing V15 proposal/authority/application receipt APIs | Stores request, decision and Business Engine application receipt separately | Bank Named Authority/Policy Owner authorizes; Business Engine executes policy change |
+| Export JSON/CSV/PDF | `POST /api/v1/cases/{case_id}/workflow/export-packages` | Checker-confirmed version; current scope/consent, latest COMPLETED Engine receipt, matching bundle/schedule and hashes required | Export is evidence handoff, not credit decision; Backend owns final use |
+| G3 Shadow / G4 Operational | Existing release-gate API | Records external gate reference bound to version/product/policy hashes | Bank Release Authority decides; G3 remains shadow and existing process retains final decision during supervised pilot |
+| Post-completion expiry / Reopen | Existing V16 reopen and V14 freeze successor-version guard | New evidence/product/policy leads to governed reopen, fresh impact list and next version; no silent overwrite | Camunda + Bank policy trigger reopen/expiry; DATA-AI performs no autonomous policy decision |
+
+## DATA-AI readiness invariants
+
+- Six full calendar months are evaluated from the Case analysis date. Each month needs trusted statement coverage, payslip evidence, Maker-reviewed payroll evidence and Maker-confirmed bank match.
+- Each month additionally needs an observed income-ledger row and Maker confirmation. No absent month is replaced with zero or average; no accepted-income value is fabricated.
+- If both PDF and CSV statement files are present, every source document must participate in a reconciliation run, source hashes must still match, and Maker must confirm a matched result. A variance or incomplete/abstained run blocks handoff.
+- Salary-account ownership/period review must cite every declared statement document. Payroll-to-bank match review must cite the payslip and bank statement documents. OCR field and transaction review must cite their source document.
+- Readiness `workflow_route_hint` is advisory only. Camunda/Bank DMN decides actual routing, Timer, expiry and terminal disposition.
+- Financial Engine handoff is a canonical JSON object hashed with SHA-256 and contains observed evidence, not calculated conclusions. Missing values remain `null`.
+- A completed Engine receipt binds the exact input bundle, product hash/version, policy hash/version, calculation version, output hash and exactly `BASELINE`, `STRESS_1`, `STRESS_2`.
+- Export is blocked if latest Engine receipt is HOLD/FAILED, if schedule/bundle/receipt hashes disagree, or if the Checker snapshot predates the received bundle/schedule/receipt. Freeze a successor version after external results are received.
+- Camunda variables remain opaque IDs and routing state only. No bank statement, applicant name or monetary amount is put in workflow event payloads.
+
+## Explicitly external / not claimed complete
+
+Real Backend/SSO and consent, deployed Camunda BPMN/DMN/Tasklist/Timer, the Business Engine calculator/policy, KMS encryption implementation, ClamAV server and quarantine storage, bank-approved OCR templates/models, PostgreSQL staging/Flyway execution, the 400-case independent OCR validation and pilot G3/G4 acceptance remain external integration or acceptance work.

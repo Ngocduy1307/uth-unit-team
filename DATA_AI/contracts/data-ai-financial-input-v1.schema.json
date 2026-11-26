@@ -1,0 +1,502 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://internal.example/schemas/data-ai-financial-input-v1.schema.json",
+  "title": "DATA-AI Financial Engine Input Bundle V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "case_id",
+    "product_request",
+    "readiness",
+    "evidence_documents",
+    "declarations",
+    "payroll_evidence_candidates",
+    "observed_income_ledger",
+    "bank_transactions",
+    "maker_input_reviews",
+    "statement_reconciliation_reviews",
+    "transaction_duplicate_candidates",
+    "evidence_review_decisions",
+    "non_imputation_policy",
+    "decision_boundary"
+  ],
+  "properties": {
+    "contract_version": {
+      "const": "DATA_AI_FINANCIAL_INPUT_V1"
+    },
+    "case_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "external_case_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "analysis_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "product_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "product_code",
+        "requested_amount_vnd",
+        "requested_term_months",
+        "loan_purpose",
+        "currency"
+      ],
+      "properties": {
+        "product_code": {
+          "type": "string",
+          "minLength": 1
+        },
+        "requested_amount_vnd": {
+          "type": "string",
+          "pattern": "^[0-9]+(\\.[0-9]{1,2})?$"
+        },
+        "requested_term_months": {
+          "type": "integer",
+          "minimum": 6,
+          "maximum": 36
+        },
+        "loan_purpose": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "currency": {
+          "const": "VND"
+        }
+      }
+    },
+    "readiness": {
+      "type": "object"
+    },
+    "evidence_documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "document_id",
+          "sha256",
+          "mime_type",
+          "document_type",
+          "processing_status",
+          "page_count"
+        ],
+        "properties": {
+          "document_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "mime_type": {
+            "type": "string"
+          },
+          "document_type": {
+            "type": "string"
+          },
+          "processing_status": {
+            "type": "string"
+          },
+          "page_count": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "declarations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "HOUSEHOLD",
+        "EMPLOYMENT",
+        "EXPENSES",
+        "LIABILITIES",
+        "SALARY_ACCOUNTS"
+      ],
+      "properties": {
+        "HOUSEHOLD": {
+          "$ref": "#/$defs/declaration"
+        },
+        "EMPLOYMENT": {
+          "$ref": "#/$defs/declaration"
+        },
+        "EXPENSES": {
+          "$ref": "#/$defs/declaration"
+        },
+        "LIABILITIES": {
+          "$ref": "#/$defs/declaration"
+        },
+        "SALARY_ACCOUNTS": {
+          "$ref": "#/$defs/declaration"
+        }
+      }
+    },
+    "payroll_evidence_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "payroll_evidence_id",
+          "document_id",
+          "payment_date",
+          "pay_period_start",
+          "pay_period_end",
+          "gross_amount_vnd_observed",
+          "net_amount_vnd_observed",
+          "currency",
+          "evidence_status",
+          "source_anchor"
+        ],
+        "properties": {
+          "payroll_evidence_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "document_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "payment_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "pay_period_start": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "pay_period_end": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "gross_amount_vnd_observed": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "net_amount_vnd_observed": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "currency": {
+            "type": "string"
+          },
+          "evidence_status": {
+            "type": "string"
+          },
+          "source_anchor": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "observed_income_ledger": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "period_month",
+          "observed_amount_vnd",
+          "accepted_amount_vnd",
+          "month_status",
+          "exclusion_reasons"
+        ],
+        "properties": {
+          "period_month": {
+            "type": "string",
+            "format": "date"
+          },
+          "observed_amount_vnd": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "accepted_amount_vnd": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "month_status": {
+            "type": "string"
+          },
+          "exclusion_reasons": {
+            "type": "array"
+          }
+        }
+      }
+    },
+    "bank_transactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "transaction_id",
+          "document_id",
+          "source_row",
+          "transaction_date",
+          "amount_vnd_observed",
+          "direction",
+          "suggested_category",
+          "classification_confidence",
+          "review_status"
+        ],
+        "properties": {
+          "transaction_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "document_id": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uuid"
+          },
+          "source_row": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "transaction_date": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "amount_vnd_observed": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "direction": {
+            "type": "string"
+          },
+          "suggested_category": {
+            "type": "string"
+          },
+          "classification_confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "review_status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "maker_input_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "review_id",
+          "target_type",
+          "target_id",
+          "decision_code",
+          "created_at"
+        ],
+        "properties": {
+          "review_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_type": {
+            "enum": [
+              "DECLARATION_REVISION",
+              "EXTRACTED_FIELD",
+              "PAYROLL_EVIDENCE",
+              "EARNING_MATCH",
+              "TRANSACTION",
+              "INCOME_LEDGER"
+            ]
+          },
+          "target_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "decision_code": {
+            "enum": [
+              "CONFIRMED",
+              "RETURNED",
+              "UNABLE_TO_VERIFY",
+              "REJECTED"
+            ]
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "statement_reconciliation_reviews": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "transaction_duplicate_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "evidence_review_decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "target_type",
+          "target_id",
+          "decision_code",
+          "reviewer_role",
+          "evidence_refs",
+          "created_at"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "target_type": {
+            "enum": [
+              "RECONCILIATION_RUN",
+              "TRANSACTION_DUPLICATE"
+            ]
+          },
+          "target_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "decision_code": {
+            "enum": [
+              "CONFIRMED_MATCH",
+              "CONFIRMED_VARIANCE",
+              "REJECTED",
+              "NEEDS_MORE_EVIDENCE",
+              "CONFIRMED_DUPLICATE",
+              "NOT_DUPLICATE"
+            ]
+          },
+          "reviewer_role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "evidence_refs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "non_imputation_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "missing_values_remain_null",
+        "missing_months_are_not_zero",
+        "averages_are_not_imputed"
+      ],
+      "properties": {
+        "missing_values_remain_null": {
+          "const": true
+        },
+        "missing_months_are_not_zero": {
+          "const": true
+        },
+        "averages_are_not_imputed": {
+          "const": true
+        }
+      }
+    },
+    "decision_boundary": {
+      "type": "object",
+      "required": [
+        "authoritative_calculation_owner",
+        "data_ai_does_not_calculate"
+      ],
+      "properties": {
+        "authoritative_calculation_owner": {
+          "const": "BUSINESS_ENGINE"
+        },
+        "data_ai_does_not_calculate": {
+          "type": "array",
+          "minItems": 8
+        }
+      }
+    }
+  },
+  "$defs": {
+    "declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "revision_id",
+        "revision_no",
+        "payload_sha256",
+        "payload"
+      ],
+      "properties": {
+        "revision_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "revision_no": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "payload": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

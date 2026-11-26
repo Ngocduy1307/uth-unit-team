@@ -1,0 +1,12 @@
+{
+  "external_event_id": "zeebe-job:example-0000001",
+  "process_instance_id": "process-instance-example-0001",
+  "process_sequence": 12,
+  "event_type": "EVIDENCE_EXPIRED",
+  "payload": {
+    "evidence_request_id": "11111111-2222-4333-8444-555555555555",
+    "timer_id": "evidence-deadline-01",
+    "reason_code": "DUE_TIME_REACHED",
+    "due_at": "2026-11-26T12:00:00Z"
+  }
+}

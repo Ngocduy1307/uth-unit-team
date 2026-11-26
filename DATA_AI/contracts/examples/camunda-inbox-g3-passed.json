@@ -1,0 +1,14 @@
+{
+  "external_event_id": "zeebe-job:example-0000002",
+  "process_instance_id": "process-instance-example-0001",
+  "process_sequence": 13,
+  "event_type": "G3_SHADOW_GATE_PASSED",
+  "payload": {
+    "external_gate_reference": "shadow-run:example-00042",
+    "policy_reference": "BANK_POLICY_2026",
+    "policy_version": "2026.4",
+    "product_code": "RETAIL",
+    "product_version": "3.2",
+    "reason_code": "SHADOW_GATE_PASSED"
+  }
+}

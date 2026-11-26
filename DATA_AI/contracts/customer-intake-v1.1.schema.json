@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://unit.com.vn/contracts/customer-intake-v1.1.schema.json",
+  "title": "UNIT Customer Loan Intake v1.1",
+  "description": "Minimal customer-facing intake contract. Browser submits to Spring Boot only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "fullName", "dateOfBirth", "phone", "residencyDeclaration",
+    "province", "ward", "employerName", "monthlyIncome", "incomeType",
+    "salaryPaidToBank", "requestedAmount", "requestedTermMonths", "loanPurpose", "consent"
+  ],
+  "properties": {
+    "fullName": {"type": "string", "minLength": 2, "maxLength": 200},
+    "dateOfBirth": {"type": "string", "format": "date"},
+    "phone": {"type": "string", "pattern": "^[0-9+]{9,15}$"},
+    "email": {"type": "string", "format": "email", "maxLength": 254},
+    "residencyDeclaration": {"const": true},
+    "province": {"type": "string", "minLength": 1, "maxLength": 120},
+    "ward": {"type": "string", "minLength": 1, "maxLength": 120},
+    "address": {"type": "string", "maxLength": 1000},
+    "employmentType": {"const": "SALARIED"},
+    "employerName": {"type": "string", "minLength": 1, "maxLength": 200},
+    "jobTitle": {"type": "string", "maxLength": 160},
+    "monthlyIncome": {"type": "number", "exclusiveMinimum": 0},
+    "incomeType": {"enum": ["NET", "GROSS"]},
+    "salaryPaidToBank": {"const": true},
+    "requestedAmount": {"type": "number", "exclusiveMinimum": 0},
+    "requestedTermMonths": {"type": "integer", "minimum": 6, "maximum": 36},
+    "loanPurpose": {"type": "string", "minLength": 1, "maxLength": 500},
+    "consent": {"const": true},
+    "formVersion": {"const": "1.1"}
+  }
+}

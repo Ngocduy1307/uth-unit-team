@@ -1,0 +1,282 @@
+erDiagram
+    access_roles {
+        string id PK
+        string created_at
+    }
+    applicant_submissions {
+        string id PK
+        string case_id FK
+        string consent_reference
+    }
+    audit_events {
+        string id PK
+        string case_id FK
+        string created_at
+    }
+    bank_branches {
+        string id PK
+        string bank_id FK
+        string status
+        string created_at
+    }
+    bank_organizations {
+        string id PK
+        string status
+        string created_at
+    }
+    cases {
+        string id PK
+        string external_case_id
+        string bank_id
+        string bank_organization_id FK
+        string customer_id FK
+        string status
+        string created_at
+    }
+    consent_events {
+        string id PK
+        string case_id FK
+        string customer_id FK
+        string consent_reference
+        string purpose_code
+        string consent_status
+        string created_at
+    }
+    customer_addresses {
+        string id PK
+        string customer_id FK
+        string created_at
+    }
+    customer_declaration_revisions {
+        string id PK
+        string case_id FK
+        string revision_no
+        string supersedes_id FK
+        string customer_id FK
+        string client_request_id
+        string payload_sha256
+    }
+    customer_employments {
+        string id PK
+        string customer_id FK
+        string created_at
+    }
+    customer_expense_declarations {
+        string id PK
+        string case_id FK
+        string client_request_id
+        string created_at
+    }
+    customer_household_profiles {
+        string id PK
+        string customer_id FK
+        string case_id FK
+        string client_request_id
+        string created_at
+    }
+    customer_liability_declarations {
+        string id PK
+        string case_id FK
+        string client_request_id
+        string created_at
+    }
+    customer_profiles {
+        string id PK
+        string bank_id FK
+        string created_at
+    }
+    customer_salary_accounts {
+        string id PK
+        string case_id FK
+        string evidence_document_id FK
+        string client_request_id
+        string created_at
+    }
+    data_quality_issues {
+        string id PK
+        string case_id FK
+        string document_id FK
+        string created_at
+    }
+    document_security_events {
+        string id PK
+        string document_id FK
+    }
+    documents {
+        string id PK
+        string case_id FK
+        string sha256
+        string processing_status
+        string malware_scan_status
+        string created_at
+    }
+    earning_match_candidates {
+        string id PK
+        string case_id FK
+        string payroll_evidence_id FK
+        string transaction_id FK
+        string created_at
+    }
+    export_jobs {
+        string id PK
+        string bank_id
+        string status
+        string created_at
+    }
+    extracted_fields {
+        string id PK
+        string document_id FK
+        string field_name
+        string coordinate_space
+        string extraction_method
+        string created_at
+    }
+    field_mapping_registry {
+        string id PK
+    }
+    form_definitions {
+        string id PK
+        string created_by FK
+        string created_at
+    }
+    form_field_definitions {
+        string id PK
+        string form_definition_id FK
+    }
+    income_ledger_months {
+        string id PK
+        string case_id FK
+        string period_month
+    }
+    loan_applications {
+        string id PK
+        string case_id FK
+        string customer_id FK
+    }
+    management_audit_logs {
+        string id PK
+        string bank_id FK
+        string actor_staff_id FK
+        string created_at
+    }
+    payroll_evidence {
+        string id PK
+        string case_id FK
+        string document_id FK
+        string gross_amount_field_id FK
+        string net_amount_field_id FK
+        string payment_date_field_id FK
+        string pay_period_start_field_id FK
+        string pay_period_end_field_id FK
+        string created_at
+    }
+    permissions {
+        string id PK
+        string created_at
+    }
+    pipeline_runs {
+        string id PK
+        string case_id FK
+        string document_id FK
+        string status
+    }
+    processing_results {
+        string id PK
+        string case_id FK
+        string document_id FK
+        string created_at
+    }
+    role_permissions {
+        string role_id PK
+        string permission_id PK
+    }
+    source_inventory {
+        string id PK
+        string created_at
+    }
+    staff_role_assignment_history {
+        string id PK
+        string staff_user_id FK
+        string role_id FK
+    }
+    staff_user_roles {
+        string staff_user_id PK
+        string role_id PK
+        string assigned_by FK
+    }
+    staff_users {
+        string id PK
+        string bank_id FK
+        string branch_id FK
+        string status
+        string created_at
+    }
+    transactions {
+        string id PK
+        string case_id FK
+        string document_id FK
+        string created_at
+    }
+    cases ||--o{ applicant_submissions : "case_id"
+    cases ||--o{ audit_events : "case_id"
+    bank_organizations ||--o{ bank_branches : "bank_id"
+    customer_profiles ||--o{ cases : "bank_organization_id"
+    customer_profiles ||--o{ cases : "customer_id"
+    customer_profiles ||--o{ cases : "customer_id"
+    bank_organizations ||--o{ cases : "bank_organization_id"
+    cases ||--o{ consent_events : "customer_id"
+    cases ||--o{ consent_events : "case_id"
+    customer_profiles ||--o{ customer_addresses : "customer_id"
+    cases ||--o{ customer_declaration_revisions : "case_id"
+    customer_declaration_revisions ||--o{ customer_declaration_revisions : "supersedes_id"
+    cases ||--o{ customer_declaration_revisions : "case_id"
+    cases ||--o{ customer_declaration_revisions : "customer_id"
+    customer_profiles ||--o{ customer_employments : "customer_id"
+    cases ||--o{ customer_expense_declarations : "case_id"
+    cases ||--o{ customer_household_profiles : "customer_id"
+    cases ||--o{ customer_household_profiles : "case_id"
+    cases ||--o{ customer_household_profiles : "case_id"
+    customer_profiles ||--o{ customer_household_profiles : "customer_id"
+    cases ||--o{ customer_liability_declarations : "case_id"
+    bank_organizations ||--o{ customer_profiles : "bank_id"
+    documents ||--o{ customer_salary_accounts : "evidence_document_id"
+    cases ||--o{ customer_salary_accounts : "case_id"
+    documents ||--o{ data_quality_issues : "document_id"
+    cases ||--o{ data_quality_issues : "case_id"
+    documents ||--o{ document_security_events : "document_id"
+    cases ||--o{ documents : "case_id"
+    transactions ||--o{ earning_match_candidates : "transaction_id"
+    cases ||--o{ earning_match_candidates : "case_id"
+    payroll_evidence ||--o{ earning_match_candidates : "payroll_evidence_id"
+    documents ||--o{ extracted_fields : "document_id"
+    staff_users ||--o{ form_definitions : "created_by"
+    form_definitions ||--o{ form_field_definitions : "form_definition_id"
+    cases ||--o{ income_ledger_months : "case_id"
+    cases ||--o{ loan_applications : "case_id"
+    customer_profiles ||--o{ loan_applications : "customer_id"
+    cases ||--o{ loan_applications : "customer_id"
+    cases ||--o{ loan_applications : "case_id"
+    staff_users ||--o{ management_audit_logs : "actor_staff_id"
+    bank_organizations ||--o{ management_audit_logs : "bank_id"
+    documents ||--o{ payroll_evidence : "document_id"
+    extracted_fields ||--o{ payroll_evidence : "pay_period_end_field_id"
+    cases ||--o{ payroll_evidence : "case_id"
+    extracted_fields ||--o{ payroll_evidence : "pay_period_start_field_id"
+    extracted_fields ||--o{ payroll_evidence : "payment_date_field_id"
+    extracted_fields ||--o{ payroll_evidence : "net_amount_field_id"
+    extracted_fields ||--o{ payroll_evidence : "gross_amount_field_id"
+    documents ||--o{ pipeline_runs : "document_id"
+    cases ||--o{ pipeline_runs : "case_id"
+    documents ||--o{ processing_results : "document_id"
+    cases ||--o{ processing_results : "case_id"
+    access_roles ||--o{ role_permissions : "role_id"
+    permissions ||--o{ role_permissions : "permission_id"
+    access_roles ||--o{ staff_role_assignment_history : "role_id"
+    staff_users ||--o{ staff_role_assignment_history : "staff_user_id"
+    staff_users ||--o{ staff_user_roles : "assigned_by"
+    access_roles ||--o{ staff_user_roles : "role_id"
+    staff_users ||--o{ staff_user_roles : "staff_user_id"
+    bank_organizations ||--o{ staff_users : "bank_id"
+    bank_branches ||--o{ staff_users : "branch_id"
+    cases ||--o{ transactions : "case_id"
+    documents ||--o{ transactions : "document_id"

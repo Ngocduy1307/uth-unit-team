@@ -1,0 +1,10 @@
+services:
+  data-ai:
+    base-url: http://data-ai:8001
+    internal-token: ${DATA_AI_INTERNAL_TOKEN}
+    assertion-key-id: ${DATA_AI_ASSERTION_KEY_ID}
+    assertion-secret: ${DATA_AI_ASSERTION_SECRET}
+    assertion-issuer: ${DATA_AI_ASSERTION_ISSUER:spring-boot-backend}
+    assertion-audience: ${DATA_AI_ASSERTION_AUDIENCE:data-ai}
+    connect-timeout-seconds: 3
+    read-timeout-seconds: 90

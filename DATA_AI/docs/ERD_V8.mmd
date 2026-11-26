@@ -1,0 +1,314 @@
+erDiagram
+    BANK_ORGANIZATIONS ||--o{ BANK_BRANCHES : contains
+    BANK_ORGANIZATIONS ||--o{ STAFF_USERS : employs
+    BANK_ORGANIZATIONS ||--o{ CUSTOMER_PROFILES : owns_scope
+    BANK_ORGANIZATIONS ||--o{ CASES : normalized_scope
+    BANK_BRANCHES o|--o{ STAFF_USERS : assigned_to
+    STAFF_USERS ||--o{ STAFF_USER_ROLES : has
+    ACCESS_ROLES ||--o{ STAFF_USER_ROLES : assigned
+    ACCESS_ROLES ||--o{ ROLE_PERMISSIONS : grants
+    PERMISSIONS ||--o{ ROLE_PERMISSIONS : included
+    STAFF_USERS o|--o{ STAFF_ROLE_ASSIGNMENT_HISTORY : changes
+    ACCESS_ROLES ||--o{ STAFF_ROLE_ASSIGNMENT_HISTORY : history
+    STAFF_USERS o|--o{ MANAGEMENT_AUDIT_LOGS : actor
+    BANK_ORGANIZATIONS o|--o{ MANAGEMENT_AUDIT_LOGS : scope
+
+    CUSTOMER_PROFILES ||--o{ CUSTOMER_ADDRESSES : has
+    CUSTOMER_PROFILES ||--o{ CUSTOMER_EMPLOYMENTS : has
+    CUSTOMER_PROFILES ||--o{ CASES : opens
+    CASES ||--o| LOAN_APPLICATIONS : describes
+    CUSTOMER_PROFILES ||--o{ LOAN_APPLICATIONS : applicant
+    CASES ||--o{ APPLICANT_SUBMISSIONS : receives
+    STAFF_USERS o|--o{ FORM_DEFINITIONS : creates
+    FORM_DEFINITIONS ||--o{ FORM_FIELD_DEFINITIONS : defines
+    CASES ||--o{ CONSENT_EVENTS : consent_history
+    CUSTOMER_PROFILES ||--o{ CONSENT_EVENTS : subject
+
+    CUSTOMER_PROFILES ||--o{ CUSTOMER_HOUSEHOLD_PROFILES : declares
+    CASES ||--o{ CUSTOMER_HOUSEHOLD_PROFILES : household_for
+    CASES ||--o{ CUSTOMER_EXPENSE_DECLARATIONS : declares
+    CASES ||--o{ CUSTOMER_LIABILITY_DECLARATIONS : declares
+    CASES ||--o{ CUSTOMER_SALARY_ACCOUNTS : salary_accounts
+    DOCUMENTS o|--o{ CUSTOMER_SALARY_ACCOUNTS : supporting_document
+    CASES ||--o{ CUSTOMER_DECLARATION_REVISIONS : revision_history
+    CUSTOMER_PROFILES o|--o{ CUSTOMER_DECLARATION_REVISIONS : subject
+    CUSTOMER_DECLARATION_REVISIONS o|--o{ CUSTOMER_DECLARATION_REVISIONS : supersedes
+
+    CASES ||--o{ DOCUMENTS : contains
+    DOCUMENTS ||--o{ DOCUMENT_SECURITY_EVENTS : security_history
+    DOCUMENTS ||--o{ EXTRACTED_FIELDS : extracts
+    CASES ||--o{ TRANSACTIONS : contains
+    DOCUMENTS o|--o{ TRANSACTIONS : source
+    CASES ||--o{ PROCESSING_RESULTS : has
+    DOCUMENTS o|--o{ PROCESSING_RESULTS : processed
+    CASES ||--o{ PIPELINE_RUNS : runs
+    DOCUMENTS o|--o{ PIPELINE_RUNS : input
+    CASES ||--o{ PAYROLL_EVIDENCE : has
+    DOCUMENTS o|--o{ PAYROLL_EVIDENCE : source_document
+    EXTRACTED_FIELDS o|--o{ PAYROLL_EVIDENCE : source_field_refs
+    PAYROLL_EVIDENCE ||--o{ EARNING_MATCH_CANDIDATES : matched
+    TRANSACTIONS ||--o{ EARNING_MATCH_CANDIDATES : candidate
+    CASES ||--o{ INCOME_LEDGER_MONTHS : monthly_ledger
+    CASES ||--o{ DATA_QUALITY_ISSUES : quality
+    DOCUMENTS o|--o{ DATA_QUALITY_ISSUES : issue_source
+    CASES ||--o{ AUDIT_EVENTS : audit
+
+    SOURCE_INVENTORY ||--o{ FIELD_MAPPING_REGISTRY : logical_source_mapping
+
+    BANK_ORGANIZATIONS {
+      uuid id PK
+      varchar bank_code UK
+      varchar bank_name
+      varchar status
+    }
+    BANK_BRANCHES {
+      uuid id PK
+      uuid bank_id FK
+      varchar branch_code
+      varchar branch_name
+    }
+    STAFF_USERS {
+      uuid id PK
+      uuid bank_id FK
+      uuid branch_id FK
+      varchar employee_code UK
+      varchar external_identity_id UK
+    }
+    ACCESS_ROLES {
+      uuid id PK
+      varchar role_code UK
+    }
+    STAFF_USER_ROLES {
+      uuid staff_user_id PK,FK
+      uuid role_id PK,FK
+      uuid assigned_by FK
+    }
+    PERMISSIONS {
+      uuid id PK
+      varchar permission_code UK
+      varchar resource
+      varchar action
+    }
+    ROLE_PERMISSIONS {
+      uuid role_id PK,FK
+      uuid permission_id PK,FK
+    }
+    STAFF_ROLE_ASSIGNMENT_HISTORY {
+      uuid id PK
+      uuid staff_user_id FK
+      uuid role_id FK
+      varchar action
+    }
+    MANAGEMENT_AUDIT_LOGS {
+      uuid id PK
+      uuid bank_id FK
+      uuid actor_staff_id FK
+      varchar action
+      jsonb before_data
+      jsonb after_data
+    }
+    CUSTOMER_PROFILES {
+      uuid id PK
+      uuid bank_id FK
+      varchar customer_code UK
+      varchar full_name
+      date date_of_birth
+      varchar phone
+    }
+    CUSTOMER_ADDRESSES {
+      uuid id PK
+      uuid customer_id FK
+      varchar address_type
+      boolean is_primary
+    }
+    CUSTOMER_EMPLOYMENTS {
+      uuid id PK
+      uuid customer_id FK
+      varchar employment_type
+      numeric monthly_income_declared
+      varchar income_basis
+    }
+    CASES {
+      uuid id PK
+      varchar external_case_id UK
+      varchar bank_id
+      uuid bank_organization_id FK
+      uuid customer_id FK
+      varchar status
+    }
+    LOAN_APPLICATIONS {
+      uuid id PK
+      uuid case_id FK,UK
+      uuid customer_id FK
+      numeric requested_amount
+      smallint requested_term_months
+    }
+    APPLICANT_SUBMISSIONS {
+      uuid id PK
+      uuid case_id FK
+      varchar form_version
+      jsonb form_data
+      varchar consent_reference
+    }
+    CONSENT_EVENTS {
+      uuid id PK
+      uuid case_id FK
+      uuid customer_id FK
+      varchar purpose_code
+      varchar notice_version
+      varchar consent_status
+      timestamptz captured_at
+    }
+    FORM_DEFINITIONS {
+      uuid id PK
+      varchar form_code
+      varchar version
+      uuid created_by FK
+    }
+    FORM_FIELD_DEFINITIONS {
+      uuid id PK
+      uuid form_definition_id FK
+      varchar field_key
+      boolean is_required
+    }
+    CUSTOMER_HOUSEHOLD_PROFILES {
+      uuid id PK
+      uuid customer_id FK
+      uuid case_id FK
+      smallint household_size
+      smallint dependents_count
+    }
+    CUSTOMER_EXPENSE_DECLARATIONS {
+      uuid id PK
+      uuid case_id FK
+      uuid client_request_id UK
+      varchar expense_category
+      numeric amount_vnd
+      varchar review_status
+    }
+    CUSTOMER_LIABILITY_DECLARATIONS {
+      uuid id PK
+      uuid case_id FK
+      uuid client_request_id UK
+      varchar liability_type
+      numeric outstanding_balance_vnd
+      numeric monthly_payment_vnd
+    }
+    CUSTOMER_SALARY_ACCOUNTS {
+      uuid id PK
+      uuid case_id FK
+      uuid evidence_document_id FK
+      uuid client_request_id UK
+      varchar account_number_last4
+      varchar ownership_verification_status
+    }
+    CUSTOMER_DECLARATION_REVISIONS {
+      uuid id PK
+      uuid case_id FK
+      uuid customer_id FK
+      uuid supersedes_id FK
+      varchar section_code
+      integer revision_no
+      jsonb payload
+    }
+    DOCUMENTS {
+      uuid id PK
+      uuid case_id FK
+      varchar sha256
+      varchar processing_status
+      varchar malware_scan_status
+      text storage_object_key
+    }
+    DOCUMENT_SECURITY_EVENTS {
+      uuid id PK
+      uuid document_id FK
+      varchar event_type
+      varchar scan_status
+      timestamptz occurred_at
+    }
+    EXTRACTED_FIELDS {
+      uuid id PK
+      uuid document_id FK
+      varchar field_name
+      jsonb normalized_value
+      numeric confidence
+      integer page_number
+      jsonb bbox
+    }
+    TRANSACTIONS {
+      uuid id PK
+      uuid case_id FK
+      uuid document_id FK
+      integer source_row
+      numeric amount_vnd
+      varchar review_status
+    }
+    PROCESSING_RESULTS {
+      uuid id PK
+      uuid case_id FK
+      uuid document_id FK
+      varchar result_status
+      jsonb summary
+    }
+    PIPELINE_RUNS {
+      uuid id PK
+      uuid case_id FK
+      uuid document_id FK
+      varchar idempotency_key UK
+      varchar status
+    }
+    PAYROLL_EVIDENCE {
+      uuid id PK
+      uuid case_id FK
+      uuid document_id FK
+      uuid net_amount_field_id FK
+      numeric net_amount
+      date payment_date
+    }
+    EARNING_MATCH_CANDIDATES {
+      uuid id PK
+      uuid payroll_evidence_id FK
+      uuid transaction_id FK
+      numeric similarity_score
+      varchar review_status
+    }
+    INCOME_LEDGER_MONTHS {
+      uuid id PK
+      uuid case_id FK
+      date period_month
+      numeric observed_amount
+      numeric accepted_amount
+    }
+    DATA_QUALITY_ISSUES {
+      uuid id PK
+      uuid case_id FK
+      uuid document_id FK
+      varchar issue_code
+      varchar issue_status
+    }
+    AUDIT_EVENTS {
+      uuid id PK
+      uuid case_id FK
+      varchar actor
+      varchar action
+      jsonb details
+    }
+    EXPORT_JOBS {
+      uuid id PK
+      varchar bank_id
+      varchar requested_by
+      varchar status
+    }
+    SOURCE_INVENTORY {
+      uuid id PK
+      varchar source_code UK
+      varchar schema_version
+      varchar approval_status
+    }
+    FIELD_MAPPING_REGISTRY {
+      uuid id PK
+      varchar source_code logical_fk
+      varchar schema_version
+      varchar source_field
+      varchar target_field
+    }

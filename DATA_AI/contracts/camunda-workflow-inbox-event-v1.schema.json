@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:data-ai:contracts:camunda-workflow-inbox-event-v1",
+  "title": "DATA-AI Camunda Workflow Inbox Event v1",
+  "description": "Signed service-to-service callback envelope. The process instance must already be bound to the same bank-scoped case. Camunda owns BPMN tasks, timers and DMN execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["external_event_id", "process_instance_id", "process_sequence", "event_type", "payload"],
+  "properties": {
+    "external_event_id": {"type": "string", "minLength": 8, "maxLength": 160, "pattern": "^[A-Za-z0-9_.:-]+$"},
+    "process_instance_id": {"type": "string", "minLength": 8, "maxLength": 160, "pattern": "^[A-Za-z0-9_.:-]+$"},
+    "process_sequence": {"type": "integer", "minimum": 1, "maximum": 9223372036854775807},
+    "event_type": {"enum": ["PROCESS_STARTED", "TASK_ASSIGNED", "TASK_COMPLETED", "EVIDENCE_EXPIRED", "CASE_EXPIRED", "PROCESS_COMPLETED", "CAMUNDA_INCIDENT", "G3_SHADOW_GATE_PASSED", "G4_OPERATIONAL_GATE_PASSED"]},
+    "payload": {
+      "type": "object",
+      "maxProperties": 24,
+      "additionalProperties": false,
+      "properties": {
+        "evidence_request_id": {"type": ["string", "null"], "maxLength": 200},
+        "task_id": {"type": ["string", "null"], "maxLength": 200},
+        "task_type": {"type": ["string", "null"], "maxLength": 200},
+        "timer_id": {"type": ["string", "null"], "maxLength": 200},
+        "reason_code": {"type": ["string", "null"], "maxLength": 200},
+        "incident_code": {"type": ["string", "null"], "maxLength": 200},
+        "incident_reference": {"type": ["string", "null"], "maxLength": 200},
+        "external_gate_reference": {"type": ["string", "null"], "maxLength": 200},
+        "policy_reference": {"type": ["string", "null"], "maxLength": 200},
+        "policy_version": {"type": ["string", "null"], "maxLength": 200},
+        "product_code": {"type": ["string", "null"], "maxLength": 200},
+        "product_version": {"type": ["string", "null"], "maxLength": 200},
+        "authority_reference": {"type": ["string", "null"], "maxLength": 200},
+        "completed_at": {"type": ["string", "integer", "boolean", "null"]},
+        "assigned_group": {"type": ["string", "null"], "maxLength": 200},
+        "document_id": {"type": ["string", "null"], "maxLength": 200},
+        "document_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "due_at": {"type": ["string", "integer", "boolean", "null"]},
+        "resubmission_id": {"type": ["string", "null"], "maxLength": 200},
+        "impact_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "analysis_version_id": {"type": ["string", "null"], "maxLength": 200},
+        "declaration_revision_id": {"type": ["string", "null"], "maxLength": 200},
+        "section_code": {"type": ["string", "null"], "maxLength": 200},
+        "revision_no": {"type": ["string", "integer", "null"]},
+        "financial_input_bundle_id": {"type": ["string", "null"], "maxLength": 200},
+        "readiness_status": {"type": ["string", "null"], "maxLength": 200},
+        "business_engine_receipt_id": {"type": ["string", "null"], "maxLength": 200}
+      }
+    }
+  },
+  "allOf": [
+    {"if": {"properties": {"event_type": {"const": "EVIDENCE_EXPIRED"}}, "required": ["event_type"]}, "then": {"properties": {"payload": {"required": ["evidence_request_id"]}}}},
+    {"if": {"properties": {"event_type": {"enum": ["G3_SHADOW_GATE_PASSED", "G4_OPERATIONAL_GATE_PASSED"]}}, "required": ["event_type"]}, "then": {"properties": {"payload": {"required": ["external_gate_reference"]}}}}
+  ]
+}

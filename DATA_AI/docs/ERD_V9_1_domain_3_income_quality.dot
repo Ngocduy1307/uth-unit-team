@@ -1,0 +1,30 @@
+digraph ERD {
+graph [rankdir=LR, splines=ortho, nodesep=0.55, ranksep=1.1, fontname="Arial", label="DATA_AI V9.1 | Domain 3: domain 3 income quality", labelloc=t, fontsize=18];
+node [shape=plain, fontname="Arial"];
+edge [color="#64748b", arrowsize=0.65, fontname="Arial", fontsize=8];
+"cases" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>cases</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">KEY</TD><TD ALIGN="LEFT">bank_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">bank_organization_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">customer_id</TD></TR></TABLE>>];
+"documents" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>documents</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR></TABLE>>];
+"transactions" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>transactions</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR></TABLE>>];
+"payroll_evidence" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>payroll_evidence</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">gross_amount_field_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">net_amount_field_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">payment_date_field_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">pay_period_start_field_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">pay_period_end_field_id</TD></TR></TABLE>>];
+"earning_match_candidates" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>earning_match_candidates</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">payroll_evidence_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">transaction_id</TD></TR></TABLE>>];
+"income_ledger_months" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>income_ledger_months</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR></TABLE>>];
+"data_quality_issues" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>data_quality_issues</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">case_id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR></TABLE>>];
+"extracted_fields" [label=<<TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0" CELLPADDING="5"><TR><TD BGCOLOR="#dbeafe"><B>extracted_fields</B></TD></TR><TR><TD ALIGN="LEFT">PK</TD><TD ALIGN="LEFT">id</TD></TR><TR><TD ALIGN="LEFT">FK</TD><TD ALIGN="LEFT">document_id</TD></TR></TABLE>>];
+"cases" -> "documents" [label="case_id"];
+"cases" -> "transactions" [label="case_id"];
+"documents" -> "transactions" [label="document_id"];
+"extracted_fields" -> "payroll_evidence" [label="pay_period_start_field_id"];
+"extracted_fields" -> "payroll_evidence" [label="payment_date_field_id"];
+"extracted_fields" -> "payroll_evidence" [label="net_amount_field_id"];
+"extracted_fields" -> "payroll_evidence" [label="gross_amount_field_id"];
+"documents" -> "payroll_evidence" [label="document_id"];
+"extracted_fields" -> "payroll_evidence" [label="pay_period_end_field_id"];
+"cases" -> "payroll_evidence" [label="case_id"];
+"payroll_evidence" -> "earning_match_candidates" [label="payroll_evidence_id"];
+"transactions" -> "earning_match_candidates" [label="transaction_id"];
+"cases" -> "earning_match_candidates" [label="case_id"];
+"cases" -> "income_ledger_months" [label="case_id"];
+"cases" -> "data_quality_issues" [label="case_id"];
+"documents" -> "data_quality_issues" [label="document_id"];
+"documents" -> "extracted_fields" [label="document_id"];
+}
