@@ -1,6 +1,6 @@
 # API Contract: Tiếp nhận Chứng từ & Kết quả OCR (KAN-118)
 
-Tài liệu đặc tả các API phục vụ tiếp nhận chứng từ, quản lý phiên bản tài liệu, lưu trữ kết quả OCR và ghi vết kiểm toán (Audit + Outbox) để phối hợp tích hợp với **Data/AI Service (Phạm Tuấn)** và **Camunda 8 Workflow (Chí Hào)**.
+Tài liệu đặc tả các API phục vụ tiếp nhận chứng từ, quản lý phiên bản tài liệu, lưu trữ kết quả OCR và ghi vết kiểm toán (Audit + Outbox) để phối hợp tích hợp với **Data/AI Service** và **Camunda 8 Workflow**.
 
 ---
 
