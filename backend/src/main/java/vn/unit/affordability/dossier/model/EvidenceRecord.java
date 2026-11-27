@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.OffsetDateTime;
 
@@ -61,7 +62,22 @@ public class EvidenceRecord {
     @Column(name = "ocr_processed_at")
     private OffsetDateTime ocrProcessedAt;
 
+    @Column(name = "version", nullable = false)
+    @Builder.Default
+    private Integer version = 1;
+
+    @Column(name = "is_latest", nullable = false)
+    @Builder.Default
+    private Boolean isLatest = true;
+
+    @Column(name = "updated_by", length = 64)
+    private String updatedBy;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private OffsetDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private OffsetDateTime updatedAt;
 }

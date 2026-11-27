@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import vn.unit.affordability.dossier.dto.CreateDossierRequest;
 import vn.unit.affordability.dossier.dto.DossierResponse;
-import vn.unit.affordability.dossier.dto.EvidenceRecordResponse;
 import vn.unit.affordability.dossier.dto.UpdateDossierStatusRequest;
 import vn.unit.affordability.dossier.service.DossierService;
 import vn.unit.affordability.shared.dto.ApiResponse;
@@ -68,11 +67,5 @@ public class DossierController {
             @PathVariable String id,
             @Valid @RequestBody UpdateDossierStatusRequest request) {
         return ResponseEntity.ok(ApiResponse.success(dossierService.updateStatus(id, request)));
-    }
-
-    @GetMapping("/{id}/evidences")
-    @Operation(summary = "Lấy danh sách chứng từ đính kèm của hồ sơ")
-    public ResponseEntity<ApiResponse<List<EvidenceRecordResponse>>> getEvidences(@PathVariable String id) {
-        return ResponseEntity.ok(ApiResponse.success(dossierService.getEvidencesByDossierId(id)));
     }
 }

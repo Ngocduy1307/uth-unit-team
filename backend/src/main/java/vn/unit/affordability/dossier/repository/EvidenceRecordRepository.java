@@ -10,7 +10,13 @@ import java.util.Optional;
 @Repository
 public interface EvidenceRecordRepository extends JpaRepository<EvidenceRecord, String> {
 
-    List<EvidenceRecord> findByDossierId(String dossierId);
+    List<EvidenceRecord> findByDossierIdOrderByCreatedAtDesc(String dossierId);
+
+    List<EvidenceRecord> findByDossierIdAndIsLatestTrueOrderByCreatedAtDesc(String dossierId);
+
+    List<EvidenceRecord> findByDossierIdAndFileTypeOrderByVersionDesc(String dossierId, String fileType);
+
+    Optional<EvidenceRecord> findByDossierIdAndFileHash(String dossierId, String fileHash);
 
     Optional<EvidenceRecord> findByFileHash(String fileHash);
 }
