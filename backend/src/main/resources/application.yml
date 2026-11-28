@@ -19,12 +19,13 @@ spring:
     hikari:
       maximum-pool-size: 10
       minimum-idle: 5
+      pool-name: AffordabilityHikariPool
 
   jpa:
     hibernate:
-      ddl-auto: validate
+      ddl-auto: validate # Check schema from flyway migration
     show-sql: false
-    open-in-view: false
+    open-in-view: false # Open Session in View
     properties:
       hibernate:
         format_sql: true
@@ -36,32 +37,36 @@ spring:
     baseline-on-migrate: true
     locations: classpath:db/migration
 
-zeebe:
-  client:
-    broker:
-      gateway-address: ${ZEEBE_GATEWAY_ADDRESS:localhost:26500}
-    security:
-      plaintext: ${ZEEBE_PLAINTEXT:true}
-    worker:
-      default-name: affordability-backend-worker
-
+# camunda-spring-boot-starter
 camunda:
   client:
-    zeebe:
-      gateway-address: ${ZEEBE_GATEWAY_ADDRESS:localhost:26500}
-      security:
-        plaintext: ${ZEEBE_PLAINTEXT:true}
+    mode: ${CAMUNDA_MODE:self-managed}
+    grpc-address: ${ZEEBE_GATEWAY_ADDRESS:http://localhost:26500}
+    rest-address: ${CAMUNDA_REST_ADDRESS:http://localhost:8081}
+    auth:
+      method: ${CAMUNDA_AUTH_METHOD:basic}
+      username: ${CAMUNDA_AUTH_USERNAME:demo}
+      password: ${CAMUNDA_AUTH_PASSWORD:demo}
+    worker:
+      defaults:
+        name: ${CAMUNDA_WORKER_NAME:affordability-backend-worker}
+        max-jobs-active: 32
+  connection:
+    validator:
+      enabled: ${CAMUNDA_CONNECTION_VALIDATOR_ENABLED:true}
+      retry-attempts: ${CAMUNDA_CONNECTION_VALIDATOR_RETRY_ATTEMPTS:5}
+      retry-delay-ms: ${CAMUNDA_CONNECTION_VALIDATOR_RETRY_DELAY_MS:3000}
 
 app:
   ai-service:
     base-url: ${AI_SERVICE_URL:http://localhost:8000}
-    connect-timeout-ms: 5000
-    read-timeout-ms: 30000
+    connect-timeout-ms: 5000 # 5s to establish TCP connection
+    read-timeout-ms: 30000 # 30s
 
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operations-sorter: method
+    operations-sorter: method # HTTP method
     tags-sorter: alpha
