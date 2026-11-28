@@ -1,0 +1,62 @@
+global:
+  development: true
+  identity:
+    auth:
+      enabled: false
+
+# Management Identity (OIDC/Keycloak)
+identity:
+  enabled: false
+
+optimize: # 8.9 needs both Management Identity and authentication to be enabled
+  enabled: false
+
+orchestration:
+  clusterSize: "1" # 1: local development, 3: production
+  partitionCount: "1"
+  replicationFactor: "1"
+  data:
+    secondaryStorage:
+      type: "elasticsearch"
+  # Configure JVM
+  javaOpts: "-XX:+ExitOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/usr/local/camunda/data -Xms512m -Xmx512m"
+  resources:
+    requests:
+      cpu: 200m
+      memory: 1Gi
+    limits:
+      cpu: 1000m
+      memory: 2Gi # heap 512m + RockDB/native memory 1.5Gi
+
+connectors:
+  enabled: true
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+
+elasticsearch:
+  enabled: true
+  master:
+    replicaCount: 1
+    heapSize: "512m"
+    resources:
+      requests:
+        cpu: 100m
+        memory: "768Mi"
+      limits:
+        cpu: 1000m
+        memory: "1Gi"
+  data:
+    replicaCount: 1
+    heapSize: "512m"
+    resources:
+      requests:
+        cpu: 200m
+        memory: "768Mi"
+      limits:
+        cpu: 1000m
+        memory: "1.5Gi"
